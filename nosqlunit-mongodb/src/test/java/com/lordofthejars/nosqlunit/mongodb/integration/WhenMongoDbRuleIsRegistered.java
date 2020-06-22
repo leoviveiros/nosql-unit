@@ -2,7 +2,6 @@ package com.lordofthejars.nosqlunit.mongodb.integration;
 
 import static com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb.MongoServerRuleBuilder.newManagedMongoDbRule;
 import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mongoDb;
-import com.mongodb.MongoClient;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -14,12 +13,9 @@ import java.util.Map;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
-import com.lordofthejars.nosqlunit.mongodb.integration.UsingDataSetAnnotationTest;
-import com.lordofthejars.nosqlunit.mongodb.integration.ShouldMatchDataSetAnnotationTest;
 import com.lordofthejars.nosqlunit.annotation.ShouldMatchDataSet;
 import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
 import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
@@ -32,7 +28,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
 public class WhenMongoDbRuleIsRegistered {

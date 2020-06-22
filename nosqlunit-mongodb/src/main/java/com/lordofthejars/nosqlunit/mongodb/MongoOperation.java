@@ -1,18 +1,18 @@
 package com.lordofthejars.nosqlunit.mongodb;
 
-import com.lordofthejars.nosqlunit.core.AbstractCustomizableDatabaseOperation;
-import com.lordofthejars.nosqlunit.core.NoSqlAssertionError;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
-import com.mongodb.MongoOptions;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
+import java.io.InputStream;
+
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
+import com.lordofthejars.nosqlunit.core.AbstractCustomizableDatabaseOperation;
+import com.lordofthejars.nosqlunit.core.NoSqlAssertionError;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 
 public final class MongoOperation extends AbstractCustomizableDatabaseOperation<MongoDbConnectionCallback, MongoClient> {
 
