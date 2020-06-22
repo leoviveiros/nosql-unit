@@ -1,20 +1,20 @@
 package com.lordofthejars.nosqlunit.mongodb.integration;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-
-import static com.lordofthejars.nosqlunit.mongodb.shard.ManagedMongosLifecycleManagerBuilder.newManagedMongosLifecycle;
 import static com.lordofthejars.nosqlunit.mongodb.ManagedMongoDbLifecycleManagerBuilder.newManagedMongoDbLifecycle;
+import static com.lordofthejars.nosqlunit.mongodb.shard.ManagedMongosLifecycleManagerBuilder.newManagedMongosLifecycle;
 import static com.lordofthejars.nosqlunit.mongodb.shard.ShardedGroupBuilder.shardedGroup;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.net.UnknownHostException;
 
+import org.bson.Document;
 import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import com.lordofthejars.nosqlunit.mongodb.shard.ShardedManagedMongoDb;
-import com.mongodb.CommandResult;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
@@ -42,7 +42,7 @@ public class WhenShardingIsRequired {
 		
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		
-		CommandResult stats = mongoClient.getDB("admin").getStats();
+		Document stats = mongoClient.getDatabase("admin").runCommand(new BasicDBObject("dbStats", 1));
 		
 		DBObject configServer = (DBObject)stats.get("raw");
 		assertThat(configServer.containsField("localhost:27020"), is(true));		

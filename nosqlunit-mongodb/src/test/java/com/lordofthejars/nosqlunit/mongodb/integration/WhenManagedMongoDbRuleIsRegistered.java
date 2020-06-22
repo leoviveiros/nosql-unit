@@ -1,21 +1,20 @@
 package com.lordofthejars.nosqlunit.mongodb.integration;
 
-import com.mongodb.MongoClient;
-
+import static com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb.MongoServerRuleBuilder.newManagedMongoDbRule;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
 
-import static com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb.MongoServerRuleBuilder.newManagedMongoDbRule;
-
+import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb;
-import com.mongodb.CommandResult;
-import com.mongodb.DB;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 
 public class WhenManagedMongoDbRuleIsRegistered {
 
@@ -24,17 +23,17 @@ public class WhenManagedMongoDbRuleIsRegistered {
 
         System.setProperty("MONGO_HOME", "/opt/mongo");
 
-        ManagedMongoDb managedMongoDb = newManagedMongoDbRule()
-                .build();
+        ManagedMongoDb managedMongoDb = newManagedMongoDbRule().build();
 
         Statement noStatement = new Statement() {
 
             @Override
             public void evaluate() throws Throwable {
                 MongoClient server = new MongoClient();
-                DB db = server.getDB("admin");
-                CommandResult stats = db.getStats();
-                assertThat(stats.ok(), is(true));
+                MongoDatabase db = server.getDatabase("admin");
+                Document document = db.runCommand(new BasicDBObject("dbStats", 1));
+                assertThat(document.getBoolean("ok"), is(true));
+                server.close();
             }
         };
 
@@ -59,10 +58,11 @@ public class WhenManagedMongoDbRuleIsRegistered {
 
             @Override
             public void evaluate() throws Throwable {
-                MongoClient server = new MongoClient();
-                DB db = server.getDB("admin");
-                CommandResult stats = db.getStats();
-                assertThat(stats.ok(), is(true));
+            	MongoClient server = new MongoClient();
+                MongoDatabase db = server.getDatabase("admin");
+                Document document = db.runCommand(new BasicDBObject("dbStats", 1));
+                assertThat(document.getBoolean("ok"), is(true));
+                server.close();
             }
         };
 
