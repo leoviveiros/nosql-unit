@@ -17,7 +17,7 @@ public final class MongoDbConfiguration extends AbstractJsr330Configuration {
 	
 	private MongoClient mongo;
 	
-	private WriteConcern writeConcern = WriteConcern.SAFE;
+	private WriteConcern writeConcern = WriteConcern.ACKNOWLEDGED;
 	
 	public MongoDbConfiguration() {
 		super();
