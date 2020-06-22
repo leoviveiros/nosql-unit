@@ -32,7 +32,6 @@ public final class MongoOperation extends AbstractCustomizableDatabaseOperation<
     public MongoOperation(MongoDbConfiguration mongoDbConfiguration) {
         try {
             this.mongo = mongoDbConfiguration.getMongo();
-            this.mongo.setWriteConcern(mongoDbConfiguration.getWriteConcern());
             this.mongoDbConfiguration = mongoDbConfiguration;
             this.setInsertionStrategy(new DefaultInsertionStrategy());
             this.setComparisonStrategy(new DefaultComparisonStrategy());

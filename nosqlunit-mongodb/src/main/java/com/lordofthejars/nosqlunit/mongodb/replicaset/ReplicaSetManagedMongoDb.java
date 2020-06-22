@@ -208,16 +208,15 @@ public class ReplicaSetManagedMongoDb extends ExternalResource {
 
     private MongoClient getDefaultMongoClient() throws UnknownHostException {
 
-        ManagedMongoDbLifecycleManager defaultConnection = replicaSetGroup
-                .getDefaultConnection();
+        ManagedMongoDbLifecycleManager defaultConnection = replicaSetGroup.getDefaultConnection();
         if (this.replicaSetGroup.isAuthenticationSet()) {
             MongoCredential credential = MongoCredential.createCredential(this.replicaSetGroup.getUsername(),
                     "admin",
                     this.replicaSetGroup.getPassword().toCharArray());
+            
             return new MongoClient(new ServerAddress(defaultConnection.getHost(), defaultConnection.getPort()), credential, MongoClientOptions.builder().build());
         } else {
-            return new MongoClient(defaultConnection.getHost(),
-                    defaultConnection.getPort());
+            return new MongoClient(defaultConnection.getHost(), defaultConnection.getPort());
         }
 
     }

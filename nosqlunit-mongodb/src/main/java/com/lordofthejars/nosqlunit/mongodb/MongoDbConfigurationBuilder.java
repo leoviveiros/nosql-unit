@@ -25,7 +25,7 @@ public class MongoDbConfigurationBuilder {
 			MongoCredential credential = MongoCredential.createCredential(this.mongoDbConfiguration.getUsername(),
 					this.mongoDbConfiguration.getDatabaseName(),
 					this.mongoDbConfiguration.getPassword().toCharArray());
-			MongoClientOptions options = MongoClientOptions.builder().build();
+			MongoClientOptions options = MongoClientOptions.builder().writeConcern(this.mongoDbConfiguration.getWriteConcern()).build();
 			mongo = new MongoClient(serverAddress, credential, options);
 			
 		} else {
