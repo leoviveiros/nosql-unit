@@ -3,7 +3,7 @@
 
     <groupId>com.lordofthejars</groupId>
     <artifactId>nosqlunit</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>nosqlunit</name>
     <description>NoSQL is a JUnit extension targeted to nosql-driven projects.</description>
@@ -35,7 +35,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mongo.version>3.2.2</mongo.version>
+        <mongo.version>4.0.4</mongo.version>
         <elasticsearch.version>1.1.1</elasticsearch.version>
         <elasticsearch2.version>2.0.2</elasticsearch2.version>
         <junit.version>4.12</junit.version>
@@ -173,7 +173,13 @@
             </dependency>
             <dependency>
                 <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver</artifactId>
+                <artifactId>mongodb-driver-core</artifactId>
+                <version>${mongo.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-legacy</artifactId>
                 <version>${mongo.version}</version>
                 <scope>provided</scope>
             </dependency>
