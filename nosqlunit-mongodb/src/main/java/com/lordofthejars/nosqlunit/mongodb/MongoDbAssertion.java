@@ -1,13 +1,5 @@
 package com.lordofthejars.nosqlunit.mongodb;
 
-import com.lordofthejars.nosqlunit.core.FailureHandler;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
-import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +7,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.lordofthejars.nosqlunit.core.FailureHandler;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 
 
 public class MongoDbAssertion {
@@ -90,7 +91,7 @@ public class MongoDbAssertion {
         MongoCollection<Document> dbCollection = mongoDb.getCollection(collectionName);
 
         int expectedDataObjectsCount = dataObjects.size();
-        long insertedDataObjectsCount = dbCollection.count();
+        long insertedDataObjectsCount = dbCollection.countDocuments();
 
         if (expectedDataObjectsCount != insertedDataObjectsCount) {
             throw FailureHandler.createFailure("Expected collection has %s elements but insert collection has %s", expectedDataObjectsCount, insertedDataObjectsCount);
@@ -281,8 +282,8 @@ public class MongoDbAssertion {
             Document filteredExpectedDataObject = filterProperties(expectedDataObject, propertiesToIgnore.get(collectionName));
             final Document foundObject = dbCollection.find(filteredExpectedDataObject).first();
 
-            if (dbCollection.count(filteredExpectedDataObject) > 1) {
-                logger.warn(String.format("There were found %d possible matches for this object # %s #. That could have been caused by ignoring too many properties.", dbCollection.count(filteredExpectedDataObject), expectedDataObject.toString()));
+            if (dbCollection.countDocuments(filteredExpectedDataObject) > 1) {
+                logger.warn(String.format("There were found %d possible matches for this object # %s #. That could have been caused by ignoring too many properties.", dbCollection.countDocuments(filteredExpectedDataObject), expectedDataObject.toString()));
             }
 
             if (!exists(foundObject)) {
