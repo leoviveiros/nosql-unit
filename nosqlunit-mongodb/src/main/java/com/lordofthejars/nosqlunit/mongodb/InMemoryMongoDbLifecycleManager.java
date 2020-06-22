@@ -1,12 +1,12 @@
 package com.lordofthejars.nosqlunit.mongodb;
 
-import com.github.fakemongo.Fongo;
-import com.lordofthejars.nosqlunit.core.AbstractLifecycleManager;
-import com.mongodb.MongoClient;
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import com.lordofthejars.nosqlunit.core.AbstractLifecycleManager;
+import com.mongodb.MongoClient;
 
 public class InMemoryMongoDbLifecycleManager extends AbstractLifecycleManager {
 
@@ -39,8 +39,9 @@ public class InMemoryMongoDbLifecycleManager extends AbstractLifecycleManager {
 	}
 
 	private MongoClient fongo(String targetPath) {
-		Fongo fongo = new Fongo(targetPath);
-		return fongo.getMongo();
+//		Fongo fongo = new Fongo(targetPath);
+//		return fongo.getMongo();
+		throw new RuntimeException("EmbeddedInMemory MongoDb instance is not available");
 	}
 	
 	@Override
