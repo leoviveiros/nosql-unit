@@ -3,10 +3,9 @@ package com.lordofthejars.nosqlunit.mongodb;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.lordofthejars.nosqlunit.core.IOUtils;
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
 import org.bson.Document;
+
+import com.lordofthejars.nosqlunit.core.IOUtils;
 
 public class DefaultComparisonStrategy implements MongoComparisonStrategy {
 
