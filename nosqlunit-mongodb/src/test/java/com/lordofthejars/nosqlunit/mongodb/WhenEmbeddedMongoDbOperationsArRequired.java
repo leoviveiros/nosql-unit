@@ -1,10 +1,10 @@
 package com.lordofthejars.nosqlunit.mongodb;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static com.lordofthejars.nosqlunit.mongodb.InMemoryMongoDb.InMemoryMongoRuleBuilder.newInMemoryMongoDbRule;
 import static com.lordofthejars.nosqlunit.mongodb.InMemoryMongoDbConfigurationBuilder.inMemoryMongoDb;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayInputStream;
 
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 
 public class WhenEmbeddedMongoDbOperationsArRequired {
 
@@ -31,8 +31,8 @@ public class WhenEmbeddedMongoDbOperationsArRequired {
 
     @After
     public void tearDown() {
-        Mongo defaultEmbeddedInstance = EmbeddedMongoInstancesFactory.getInstance().getDefaultEmbeddedInstance();
-        defaultEmbeddedInstance.getDB("test").getCollection("collection1").drop();
+        MongoClient defaultEmbeddedInstance = EmbeddedMongoInstancesFactory.getInstance().getDefaultEmbeddedInstance();
+        defaultEmbeddedInstance.getDatabase("test").getCollection("collection1").drop();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class WhenEmbeddedMongoDbOperationsArRequired {
         MongoOperation mongoOperation = new MongoOperation(inMemoryMongoDb().databaseName("test").build());
         mongoOperation.insert(new ByteArrayInputStream(DATA.getBytes()));
 
-        Mongo mongo = mongoOperation.connectionManager();
+        MongoClient mongo = mongoOperation.connectionManager();
         DBCollection collection = mongo.getDB("test").getCollection("collection1");
         DBObject object = collection.findOne();
 
@@ -56,7 +56,7 @@ public class WhenEmbeddedMongoDbOperationsArRequired {
         mongoOperation.insert(new ByteArrayInputStream(DATA.getBytes()));
         mongoOperation.deleteAll();
 
-        Mongo mongo = mongoOperation.connectionManager();
+        MongoClient mongo = mongoOperation.connectionManager();
         DBCollection collection = mongo.getDB("test").getCollection("collection1");
         DBObject object = collection.findOne();
 

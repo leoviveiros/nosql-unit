@@ -1,10 +1,9 @@
 package com.lordofthejars.nosqlunit.mongodb;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
-
-import java.util.Arrays;
 
 
 public class MongoDbConfigurationBuilder {
@@ -22,10 +21,13 @@ public class MongoDbConfigurationBuilder {
 	public MongoDbConfiguration build() {
 		MongoClient mongo = null;
 		if(this.mongoDbConfiguration.isAuthenticateParametersSet()) {
+			ServerAddress serverAddress = new ServerAddress(this.mongoDbConfiguration.getHost(), this.mongoDbConfiguration.getPort());
 			MongoCredential credential = MongoCredential.createCredential(this.mongoDbConfiguration.getUsername(),
 					this.mongoDbConfiguration.getDatabaseName(),
 					this.mongoDbConfiguration.getPassword().toCharArray());
-			mongo = new MongoClient(new ServerAddress(this.mongoDbConfiguration.getHost(), this.mongoDbConfiguration.getPort()), Arrays.asList(credential));
+			MongoClientOptions options = MongoClientOptions.builder().build();
+			mongo = new MongoClient(serverAddress, credential, options);
+			
 		} else {
 			mongo = new MongoClient(this.mongoDbConfiguration.getHost(), this.mongoDbConfiguration.getPort());
 		}

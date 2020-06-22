@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 
 public class WhenMultipleMongoObjectsAreAnnotatedWithInject {
 
@@ -29,11 +29,11 @@ public class WhenMultipleMongoObjectsAreAnnotatedWithInject {
 	
 	@Named("one")
 	@Inject
-	private Mongo mongo1;
+	private MongoClient mongo1;
 	
 	@Named("two")
 	@Inject
-	private Mongo mongo2;
+	private MongoClient mongo2;
 	
 
 	@Test

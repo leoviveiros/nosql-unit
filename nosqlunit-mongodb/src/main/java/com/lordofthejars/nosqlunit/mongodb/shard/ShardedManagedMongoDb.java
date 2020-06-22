@@ -1,13 +1,10 @@
 package com.lordofthejars.nosqlunit.mongodb.shard;
 
 import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +14,9 @@ import com.lordofthejars.nosqlunit.mongodb.ManagedMongoDbLifecycleManager;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbCommands;
 import com.lordofthejars.nosqlunit.mongodb.replicaset.ReplicaSetManagedMongoDb;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 public class ShardedManagedMongoDb extends ExternalResource {
 
@@ -224,7 +224,7 @@ public class ShardedManagedMongoDb extends ExternalResource {
 			MongoCredential credential = MongoCredential.createCredential(this.shardedGroup.getUsername(),
 					"admin",
 					this.shardedGroup.getPassword().toCharArray());
-			return new MongoClient(new ServerAddress(firstMongosServer.getHost(), firstMongosServer.getPort()), Arrays.asList(credential));
+			return new MongoClient(new ServerAddress(firstMongosServer.getHost(), firstMongosServer.getPort()), credential, MongoClientOptions.builder().build());
 		} else {
 			return new MongoClient(firstMongosServer.getHost(), firstMongosServer.getPort());
 		}

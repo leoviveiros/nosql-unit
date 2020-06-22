@@ -1,10 +1,10 @@
 package com.lordofthejars.nosqlunit.mongodb.integration;
 
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb.MongoServerRuleBuilder.newManagedMongoDbRule;
 import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mongoDb;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +19,7 @@ import org.junit.runners.model.Statement;
 import com.lordofthejars.nosqlunit.mongodb.ManagedMongoDb;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbConfiguration;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 
 public class WhenMongoObjectIsAnnotatedWithInject {
 
@@ -28,7 +28,7 @@ public class WhenMongoObjectIsAnnotatedWithInject {
 			.build();
 	
 	@Inject
-	private Mongo mongo;
+	private MongoClient mongo;
 	
 	@Before
 	public void setUp() {

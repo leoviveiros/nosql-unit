@@ -1,21 +1,22 @@
 package com.lordofthejars.nosqlunit.mongodb.replicaset;
 
-import com.lordofthejars.nosqlunit.mongodb.ManagedMongoDbLifecycleManager;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbCommands;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbLowLevelOps;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbLowLevelOpsFactory;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.lordofthejars.nosqlunit.mongodb.ManagedMongoDbLifecycleManager;
+import com.lordofthejars.nosqlunit.mongodb.MongoDbCommands;
+import com.lordofthejars.nosqlunit.mongodb.MongoDbLowLevelOps;
+import com.lordofthejars.nosqlunit.mongodb.MongoDbLowLevelOpsFactory;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 public class ReplicaSetManagedMongoDb extends ExternalResource {
 
@@ -213,7 +214,7 @@ public class ReplicaSetManagedMongoDb extends ExternalResource {
             MongoCredential credential = MongoCredential.createCredential(this.replicaSetGroup.getUsername(),
                     "admin",
                     this.replicaSetGroup.getPassword().toCharArray());
-            return new MongoClient(new ServerAddress(defaultConnection.getHost(), defaultConnection.getPort()), Arrays.asList(credential));
+            return new MongoClient(new ServerAddress(defaultConnection.getHost(), defaultConnection.getPort()), credential, MongoClientOptions.builder().build());
         } else {
             return new MongoClient(defaultConnection.getHost(),
                     defaultConnection.getPort());
